@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <script type="text/javascript" src="https://dev.pjtest.com/trinity/js/sdk.js"></script>
+</head>
+<body>
+<form>
+  <label>Card Number</label>
+  <input type="text" name="cardNumber">
+
+  <label>Card Exp Month</label>
+  <input type="text" name="cardExpMonth">
+
+  <label>Card Exp Year</label>
+  <input type="text" name="cardExpYear">
+
+  <label>Card Cvv</label>
+  <input type="text" name="cardCvv">
+
+  <button type="submit">Submit</button>
+
+  <div id="displayTokenResponse" style="display: none;"></div>
+</form>
+
+<script>
+  const pj = PayJunction('4IIAW2jNK2FVCyZ329xdGA');
+
+  const form = document.querySelector('form');
+  const displayTokenResponseEl = document.querySelector('#displayTokenResponse');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const data = {
+      cardNumber: event.target.cardNumber.value,
+      cardExpMonth: event.target.cardExpMonth.value,
+      cardExpYear: event.target.cardExpYear.value,
+      cardCvv: event.target.cardCvv.value,
+    };
+
+    pj.createToken(data)
+        .then(res => {
+          displayTokenResponseEl.textContent = JSON.stringify(res);
+          displayTokenResponseEl.style.display = 'block';
+        });
+  });
+</script>
+</body>
+</html>
+
